@@ -1,6 +1,6 @@
 <h2>Top Heroes</h2>
 <div class="heroes-menu">
-  <a *ngFor="let hero of heroes$ | async | slice:0:5" routerLink="/heroes/{{hero.id}}">
+  <a *ngFor="let hero of heroes$ | async | slice:0:5" routerLink="/heroes/{{hero.uuid}}">
     {{ hero.name }}
   </a>
 </div>

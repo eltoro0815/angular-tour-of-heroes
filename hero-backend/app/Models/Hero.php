@@ -12,4 +12,8 @@ final class Hero extends Model
 {
     use HasFactory;
     use InteractsWithUuid;
+
+    protected $fillable = [
+        'name'
+    ];
 }

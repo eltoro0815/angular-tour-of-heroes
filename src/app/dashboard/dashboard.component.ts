@@ -9,7 +9,7 @@ import { HeroService } from '../hero.service';
   styleUrls: [ './dashboard.component.css' ]
 })
 export class DashboardComponent {
-  heroes$: Observable<Hero[]> = this.heroService.getHeroes();
+  public readonly heroes$: Observable<Hero[]> = this.heroService.heroes$;
 
   constructor(private heroService: HeroService) { }
 
