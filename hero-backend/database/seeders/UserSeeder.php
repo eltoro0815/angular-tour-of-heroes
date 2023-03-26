@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             [
                 'name' => "thorsten@ddev.site",
                 'email' => "thorsten@ddev.site",
-                'password' => "thorsten@ddev.site"
+                'password' => bcrypt("thorsten@ddev.site")
 
             ]
         );
