@@ -75,7 +75,7 @@ export class HeroService {
         list.forEach(function(item, i) { if (item.uuid == hero.uuid) list[i] = updatedHero});
         this.heroes.next(list);
       }),
-      tap(_ => this.log(`fetched hero uuid=${hero.uuid} HTTP`)),
+      tap(_ => this.log(`updated hero uuid=${hero.uuid} HTTP`)),
       catchError(this.handleError<Hero>(`getHero uuid=${hero.uuid}`))
     );
 
