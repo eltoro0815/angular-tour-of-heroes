@@ -1,0 +1,36 @@
+<h2>My Heroes</h2>
+
+<div>
+  <label for="new-hero">Hero name: </label>
+  <input id="new-hero" #heroName />
+
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button
+    type="button"
+    class="add-button"
+    (click)="add(heroName.value); heroName.value = ''"
+  >
+    Add hero
+  </button>
+</div>
+
+<div style="width: 100%; overflow: hidden">
+  <div style="width: 600px; float: left">
+    <ul class="heroes">
+      <li *ngFor="let hero of heroes">
+        <a routerLink="/heroes/{{ hero.id }}">
+          <span class="badge">{{ hero.id }}</span> {{ hero.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div style="margin-left: 620px">
+    <ul class="heroes">
+      <li *ngFor="let hero of heroes$ | async">
+        <a routerLink="/heroes/{{ hero.id }}">
+          <span class="badge">{{ hero.id }}</span> {{ hero.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
