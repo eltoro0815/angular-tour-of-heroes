@@ -23,7 +23,13 @@ final class HeroesIndexController extends Controller
         );
 
         // $heroes = Hero::query()->orderBy('id')->cursorPaginate(15);
-        $heroes = Hero::query()->orderBy('id')->get();
+
+        $heroesQuery = Hero::query();
+        if ($search = $request['name']) {
+            $heroesQuery->where('name', 'LIKE', "%{$search}%");
+        }
+
+        $heroes = $heroesQuery->orderBy('id')->get();
 
         return HeroResource::collection($heroes);
     }
