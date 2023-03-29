@@ -20,4 +20,8 @@ export class HeroesComponent {
     if (!name) { return; }
     this.heroService.addHero({ name } as Hero);
   }
+
+  delete(hero: Hero): void {
+    this.heroService.deleteHero(hero.uuid).subscribe();
+  }
 }

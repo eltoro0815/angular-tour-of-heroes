@@ -7,6 +7,7 @@ import { HeroIndexResponse } from './heroes.index.response';
 import { HeroStoreResponse } from './heroes.store.response';
 import { HeroShowResponse } from './heroes.show.response';
 import { HeroUpdateResponse } from './heroes.update.response';
+import { HeroDeleteResponse } from './heroes.delete.response';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +35,8 @@ export class HeroService {
       tap(_ => this.log('fetched heroes HTTP')),
       catchError(this.handleError<HeroIndexResponse>('constructor'))
     ).subscribe(response => {
+      // console.log(response);
+
       this.heroes.next(response.data)
     });
   }
@@ -60,7 +63,7 @@ export class HeroService {
     const url = `${this.heroesUrl}/${uuid}`;
     return this.httpClient.get<HeroShowResponse>(url, this.httpOptions).pipe(
       map(response => response.data),
-      tap(_ => this.log(`fetched hero uuid=${uuid} HTTP`)),
+      tap(_ => this.log(`fetched hero uuid=${uuid}`)),
       catchError(this.handleError<Hero>(`getHero uuid=${uuid}`))
     );
   }
@@ -72,14 +75,35 @@ export class HeroService {
       map(response => response.data),
       tap(updatedHero => {
         let list = this.heroes.getValue();
-        list.forEach(function(item, i) { if (item.uuid == hero.uuid) list[i] = updatedHero});
+        list.forEach(function (item, i) { if (item.uuid == hero.uuid) list[i] = updatedHero });
         this.heroes.next(list);
       }),
-      tap(_ => this.log(`updated hero uuid=${hero.uuid} HTTP`)),
+      tap(_ => this.log(`updated hero uuid=${hero.uuid}`)),
       catchError(this.handleError<Hero>(`getHero uuid=${hero.uuid}`))
     );
 
-    // %%todo%%: update Heros List
+  }
+
+  /** DELETE: delete the hero from the server */
+  deleteHero(uuid: string): Observable<Hero> {
+    const url = `${this.heroesUrl}/${uuid}`;
+
+    return this.httpClient.delete<HeroDeleteResponse>(url, this.httpOptions).pipe(
+
+      tap( (response : HeroDeleteResponse) => {
+
+        let list = this.heroes.getValue();
+        list = list.filter(h => h.uuid != uuid);
+
+        this.heroes.next(list);
+      }),
+      map((response : HeroDeleteResponse) => {
+        return  response?.data
+      }),
+
+      tap(_ => this.log(`deleted hero uuid=${uuid}`)),
+      catchError(this.handleError<Hero>('deleteHero'))
+    );
   }
 
 

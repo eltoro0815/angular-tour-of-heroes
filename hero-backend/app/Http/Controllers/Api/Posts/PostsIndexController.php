@@ -21,7 +21,8 @@ final class PostsIndexController extends Controller
             Response::HTTP_NOT_FOUND
         );
 
-        $posts = Post::query()->paginate();
+        // $posts = Post::query()->paginate();
+        $posts = Post::all();
 
         return PostResource::collection($posts);
     }

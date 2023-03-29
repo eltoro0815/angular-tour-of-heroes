@@ -21,7 +21,8 @@ final class UsersIndexController extends Controller
             Response::HTTP_NOT_FOUND
         );
 
-        $users = User::query()->paginate();
+        // $users = User::query()->paginate();
+        $users = User::all();
 
         return UserResource::collection($users);
     }
