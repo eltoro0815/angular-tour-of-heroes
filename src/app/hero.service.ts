@@ -115,7 +115,7 @@ export class HeroService {
       return of([]);
     }
 
-    return this.httpClient.get<HeroIndexResponse>(`${this.heroesUrl}/?name=${term}`, this.httpOptions).pipe(
+    return this.httpClient.get<HeroIndexResponse>(`${this.heroesUrl}/search/${term}`, this.httpOptions).pipe(
       map(response => response.data),
       tap(x => x.length ?
          this.log(`found heroes matching "${term}"`) :

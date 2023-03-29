@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Api\Heroes\{HeroesDestroyController, HeroesIndexController, HeroesShowController, HeroesStoreController, HeroesUpdateController};
+use App\Http\Controllers\Api\Heroes\{HeroesDestroyController, HeroesIndexController, HeroesShowController, HeroesStoreController, HeroesUpdateController, HeroesSearchController};
 use App\Http\Controllers\Api\Posts\{PostsDestroyController, PostsIndexController, PostsShowController, PostsStoreController, PostsUpdateController};
 use App\Http\Controllers\Api\Users\{UsersDestroyController, UsersIndexController, UsersShowController, UsersUpdateController};
 use Illuminate\Support\Facades\Route;
@@ -40,5 +40,11 @@ Route::middleware(['auth:sanctum', 'cache.headers:public;max_age=60;etag', 'treb
         Route::get('/{hero}', HeroesShowController::class)->name('heroes.show');
         Route::match(['put', 'patch'], '/{hero}', HeroesUpdateController::class)->name('heroes.update');
         Route::delete('/{hero}', HeroesDestroyController::class)->name('heroes.destroy');
+
+        Route::get('/search/{search}', HeroesSearchController::class)->name('heroes.search');
+
     });
+
 });
+
+

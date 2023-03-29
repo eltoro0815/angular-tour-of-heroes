@@ -7,14 +7,14 @@ namespace App\Http\Controllers\Api\Heroes;
 use App\Enums\Version;
 use App\Http\Resources\v1_0\HeroResource;
 use App\Models\Hero;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class HeroesIndexController extends Controller
+final class HeroesSearchController extends Controller
 {
-    public function __invoke(Request $request, Version $version): AnonymousResourceCollection
+    public function __invoke(Request $request, Version $version, string $search): AnonymousResourceCollection
     {
         //
         abort_unless(
@@ -22,8 +22,7 @@ final class HeroesIndexController extends Controller
             Response::HTTP_NOT_FOUND
         );
 
-        // $heroes = Hero::query()->orderBy('id')->cursorPaginate(15);
-        $heroes = Hero::query()->orderBy('id')->get();
+        $heroes = Hero::query()->where('name', 'LIKE', "%$search%")->orderBy('id')->get();
 
         return HeroResource::collection($heroes);
     }
